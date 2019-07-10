@@ -1,3 +1,3 @@
 # ClosurePublisher
 
-A description of this package.
+Combine Publisher for closure results
