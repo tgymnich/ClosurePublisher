@@ -2,7 +2,7 @@
 
 Simple publisher you can use to publish the result of a closure.
 ```
-let publisher = Publishers.Closure(closure: { return 1 } 
+let publisher = Publishers.Closure(closure: { Date() } 
 ```
 
 # Usage
