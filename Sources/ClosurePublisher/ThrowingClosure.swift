@@ -5,13 +5,13 @@
 //  Created by Tim Gymnich on 7/10/19.
 //
 
-import Foundation
 import Combine
 
-@available(OSX 10.15, iOS 13, *)
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Publishers {
     
-    public struct ThrowingClosurePublisher<ReturnType>: Publisher {
+    /// In contrast with `Publishers.Just`, a `Closure` publisher will evaluate it's closure on every receive call.
+    public struct ThrowingClosure<ReturnType>: Publisher {
         public typealias Output = ReturnType
         public typealias Failure = Error
         
@@ -21,7 +21,7 @@ extension Publishers {
             self.closure = closure
         }
         
-        public func receive<S>(subscriber: S) where S : Subscriber, ThrowingClosurePublisher.Failure == S.Failure, ThrowingClosurePublisher.Output == S.Input {
+        public func receive<S>(subscriber: S) where S : Subscriber, ThrowingClosure.Failure == S.Failure, ThrowingClosure.Output == S.Input {
             let subscription  = ThrowingClosureSubscription(subscriber: subscriber, closure: closure)
             subscriber.receive(subscription: subscription)
         }

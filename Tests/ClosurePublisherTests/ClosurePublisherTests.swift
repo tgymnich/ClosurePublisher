@@ -7,7 +7,7 @@ import Foundation
 final class ClosurePublisherTests: XCTestCase {
     func testClosurePublisher() {
         var success = false
-        let publisher = Publishers.ClosurePublisher(closure: { return 1 })
+        let publisher = Publishers.Closure(closure: { return 1 })
         publisher.sink {
             if $0 == 1 {
                 success = true
@@ -18,17 +18,18 @@ final class ClosurePublisherTests: XCTestCase {
     
     func testThrowingClosurePublisher1() {
         var success = false
-        let publisher = Publishers.ThrowingClosurePublisher(closure: { return 1 })
+        let publisher = Publishers.ThrowingClosure(closure: { return 1 })
         publisher.sink {
             if $0 == 1 {
                 success = true
             }
         }
+        let pub = Just(1)
     }
     
     func testThrowingClosurePublisher2() {
         var success = false
-        let publisher = Publishers.ThrowingClosurePublisher { () -> Int in
+        let publisher = Publishers.ThrowingClosure { () -> Int in
             let decoder = JSONDecoder()
             let x = try decoder.decode(Int.self, from: Data())
             return x

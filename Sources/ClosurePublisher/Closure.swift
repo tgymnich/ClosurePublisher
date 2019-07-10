@@ -7,10 +7,11 @@
 
 import Combine
 
-@available(OSX 10.15, iOS 13, *)
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 extension Publishers {
     
-    public struct ClosurePublisher<ReturnType>: Publisher {
+    /// In contrast with `Publishers.Just`, a `Closure` publisher will evaluate it's closure on every receive call.
+    public struct Closure<ReturnType>: Publisher {
         public typealias Output = ReturnType
         public typealias Failure = Never
         
@@ -20,7 +21,7 @@ extension Publishers {
             self.closure = closure
         }
         
-        public func receive<S>(subscriber: S) where S : Subscriber, ClosurePublisher.Failure == S.Failure, ClosurePublisher.Output == S.Input {
+        public func receive<S>(subscriber: S) where S : Subscriber, Closure.Failure == S.Failure, Closure.Output == S.Input {
             let subscription  = ClosureSubscription(subscriber: subscriber, closure: closure)
             subscriber.receive(subscription: subscription)
         }
